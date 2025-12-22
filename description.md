@@ -1,4 +1,4 @@
-# **TaskFlow – Workspace & Board Management App**
+# **Flowboard – Workspace & Board Management App**
 
 A full-stack **Next.js 16 App Router** project that teaches modern full-stack development with **React Server Components, API Route Handlers, data fetching, caching, authentication, and Docker**.
 
@@ -37,7 +37,7 @@ A full-stack **Next.js 16 App Router** project that teaches modern full-stack de
 
 ## **Project Description**
 
-TaskFlow is a productivity app where users can:
+Flowboard is a productivity app where users can:
 
 ✅ Create Workspaces
 
@@ -124,7 +124,7 @@ By completing this project, the student will be able to:
 
 ## Workspace Entities
 
-TaskFlow manages three core entities:
+Flowboard manages three core entities:
 
 1. **Workspaces**
 2. **Boards**
@@ -136,7 +136,7 @@ Each Workspace has multiple Boards, and each Board contains multiple Tasks.
 
 ## **API Routes (Route Handlers)**
 
-> Next.js 16 Route Handlers under app/api/*/route.js
+> Next.js 14 Route Handlers under app/api/*/route.js
 > 
 
 ### 🧑 Auth
@@ -253,7 +253,7 @@ Each Workspace has multiple Boards, and each Board contains multiple Tasks.
 ## **Folder Structure**
 
 ```
-taskflow/
+flowboard/
 ├── app/
 │   ├── layout.js
 │   ├── page.js
@@ -262,22 +262,23 @@ taskflow/
 │   │   │   └── page.js
 │   │   ├── signup/
 │   │   │   └── page.js
-│   ├── workspace/
-│   │   └── page.js
-│   │   └── [workspaceId]/
-│   │       └── page.js
-│   ├── board/
-│   │   └── [boardId]/
-│   │       └── page.js
+│   ├── (dashboard)
+|		|		├── workspace/
+|		│   │   ├── page.js
+|		│   │   ├── [workspaceId]/
+|		│   │   |   └── page.js
+|		|		│   ├── board/
+|		|	  |		|   └── [boardId]/
+|		│   │   |   └── page.js
 │   ├── api/
 │   │   ├── auth/
 │   │   │   └── route.js
 │   │   ├── workspaces/
-│   │   │   └── route.js
-│   │   ├── boards/
-│   │   │   └── route.js
-│   │   ├── tasks/
-│   │       └── route.js
+│   │   │   ├── route.js
+|		│   │   ├── boards/
+|		│   │   │   └── route.js
+|		│   │   ├── tasks/
+|		│   │   |   └── route.js
 ├── components/
 │   ├── ui/
 │   ├── workspace/
@@ -305,7 +306,7 @@ taskflow/
 
 ```
 +-----------------------------+
-| TaskFlow Logo               |
+| Flowboard Logo              |
 | LOGIN                       |
 | [ Email Input       ]       |
 | [ Password Input    ]       |
@@ -322,7 +323,7 @@ taskflow/
 
 ```
 +-----------------------------+
-| TaskFlow Logo               |
+| Flowboard Logo              |
 | SIGN UP                     |
 | [ Full Name Input   ]       |
 | [ Email Input       ]       |
@@ -482,7 +483,7 @@ A **professional intermediate full-stack application** fully in **Next.js**, usi
 ### 1.1 — Create Next App
 
 ```bash
-npx create-next-app@latest taskflow --typescript
+npx create-next-app@latest flowboard --typescript
 ```
 
 Choose **App Router, ESLint, TailwindCSS**
@@ -551,7 +552,7 @@ version: "3"
 services:
   mongodb:
     image: mongo:latest
-    container_name: taskflow-mongo
+    container_name: flowboard-mongo
     ports:
       - "27017:27017"
     volumes:

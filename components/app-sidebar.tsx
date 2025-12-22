@@ -35,7 +35,7 @@ const data = {
   },
   teams: [
     {
-      name: "TaskFlow",
+      name: "Flowboard",
       logo: GalleryVerticalEnd,
       plan: "Pro",
     },
