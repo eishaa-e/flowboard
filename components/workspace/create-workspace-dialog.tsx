@@ -67,7 +67,7 @@ export function CreateWorkspaceDialog() {
                                 id="name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder="My Awesome Workspace"
+                                placeholder="My Workspace"
                                 required
                             />
                         </div>
