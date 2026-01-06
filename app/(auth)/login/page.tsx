@@ -20,12 +20,19 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
+      <div className="relative hidden w-full h-full lg:flex items-center justify-center bg-muted">
+        <div className="absolute inset-0 bg-zinc-900/10 z-10" />
         <img
-          src="/placeholder.svg"
-          alt="Image"
+          src="/auth-bg.png"
+          alt="Flowboard Authentication"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
+        <div className="relative z-20 flex items-center gap-3 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-2xl">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg">
+            <GalleryVerticalEnd className="size-6" />
+          </div>
+          <span className="text-3xl font-bold tracking-tight text-white drop-shadow-md">Flowboard</span>
+        </div>
       </div>
     </div>
   )

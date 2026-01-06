@@ -31,6 +31,7 @@ import { Input } from "@/components/ui/input"
 import { api } from "@/lib/axios"
 import { TaskCard, Task } from "@/components/task/task-card"
 import { EditTaskDialog } from "@/components/task/edit-task-dialog"
+import { cn } from "@/lib/utils"
 
 interface Board {
     _id: string
@@ -52,6 +53,26 @@ export function TaskBoard({ board, initialTasks }: { board: Board; initialTasks:
     // Edit Dialog state
     const [editTask, setEditTask] = useState<Task | null>(null)
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+
+    const pastelColors = [
+        "bg-red-50 hover:bg-red-100 dark:bg-red-900/10 dark:hover:bg-red-900/20",
+        "bg-orange-50 hover:bg-orange-100 dark:bg-orange-900/10 dark:hover:bg-orange-900/20",
+        "bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/10 dark:hover:bg-amber-900/20",
+        "bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900/10 dark:hover:bg-yellow-900/20",
+        "bg-lime-50 hover:bg-lime-100 dark:bg-lime-900/10 dark:hover:bg-lime-900/20",
+        "bg-green-50 hover:bg-green-100 dark:bg-green-900/10 dark:hover:bg-green-900/20",
+        "bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/10 dark:hover:bg-emerald-900/20",
+        "bg-teal-50 hover:bg-teal-100 dark:bg-teal-900/10 dark:hover:bg-teal-900/20",
+        "bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/10 dark:hover:bg-cyan-900/20",
+        "bg-sky-50 hover:bg-sky-100 dark:bg-sky-900/10 dark:hover:bg-sky-900/20",
+        "bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/10 dark:hover:bg-blue-900/20",
+        "bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/10 dark:hover:bg-indigo-900/20",
+        "bg-violet-50 hover:bg-violet-100 dark:bg-violet-900/10 dark:hover:bg-violet-900/20",
+        "bg-purple-50 hover:bg-purple-100 dark:bg-purple-900/10 dark:hover:bg-purple-900/20",
+        "bg-fuchsia-50 hover:bg-fuchsia-100 dark:bg-fuchsia-900/10 dark:hover:bg-fuchsia-900/20",
+        "bg-pink-50 hover:bg-pink-100 dark:bg-pink-900/10 dark:hover:bg-pink-900/20",
+        "bg-rose-50 hover:bg-rose-100 dark:bg-rose-900/10 dark:hover:bg-rose-900/20",
+    ];
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -248,6 +269,26 @@ function BoardColumn({
         id: column.id,
     })
 
+    const pastelColors = [
+        "bg-red-50 hover:bg-red-100 dark:bg-red-900/10 dark:hover:bg-red-900/20",
+        "bg-orange-50 hover:bg-orange-100 dark:bg-orange-900/10 dark:hover:bg-orange-900/20",
+        "bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/10 dark:hover:bg-amber-900/20",
+        "bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900/10 dark:hover:bg-yellow-900/20",
+        "bg-lime-50 hover:bg-lime-100 dark:bg-lime-900/10 dark:hover:bg-lime-900/20",
+        "bg-green-50 hover:bg-green-100 dark:bg-green-900/10 dark:hover:bg-green-900/20",
+        "bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/10 dark:hover:bg-emerald-900/20",
+        "bg-teal-50 hover:bg-teal-100 dark:bg-teal-900/10 dark:hover:bg-teal-900/20",
+        "bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/10 dark:hover:bg-cyan-900/20",
+        "bg-sky-50 hover:bg-sky-100 dark:bg-sky-900/10 dark:hover:bg-sky-900/20",
+        "bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/10 dark:hover:bg-blue-900/20",
+        "bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/10 dark:hover:bg-indigo-900/20",
+        "bg-violet-50 hover:bg-violet-100 dark:bg-violet-900/10 dark:hover:bg-violet-900/20",
+        "bg-purple-50 hover:bg-purple-100 dark:bg-purple-900/10 dark:hover:bg-purple-900/20",
+        "bg-fuchsia-50 hover:bg-fuchsia-100 dark:bg-fuchsia-900/10 dark:hover:bg-fuchsia-900/20",
+        "bg-pink-50 hover:bg-pink-100 dark:bg-pink-900/10 dark:hover:bg-pink-900/20",
+        "bg-rose-50 hover:bg-rose-100 dark:bg-rose-900/10 dark:hover:bg-rose-900/20",
+    ];
+
     return (
         <div
             ref={setNodeRef}
@@ -265,8 +306,13 @@ function BoardColumn({
                 strategy={verticalListSortingStrategy}
             >
                 <div className="flex flex-col gap-2 flex-1 overflow-y-auto min-h-[100px]">
-                    {tasks.map((task: any) => (
-                        <SortableTaskItem key={task._id} task={task} onClick={() => onTaskClick(task)} />
+                    {tasks.map((task: any, index: number) => (
+                        <SortableTaskItem
+                            key={task._id}
+                            task={task}
+                            onClick={() => onTaskClick(task)}
+                            className={pastelColors[index % pastelColors.length]}
+                        />
                     ))}
                 </div>
             </SortableContext>
@@ -303,7 +349,7 @@ function BoardColumn({
     )
 }
 
-function SortableTaskItem({ task, onClick }: { task: Task, onClick: () => void }) {
+function SortableTaskItem({ task, onClick, className }: { task: Task, onClick: () => void, className?: string }) {
     const {
         attributes,
         listeners,
@@ -321,7 +367,7 @@ function SortableTaskItem({ task, onClick }: { task: Task, onClick: () => void }
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} onClick={onClick}>
-            <TaskCard task={task} />
+            <TaskCard task={task} className={className} />
         </div>
     )
 }

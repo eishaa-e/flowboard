@@ -20,7 +20,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { api } from "@/lib/axios"
 
-export function CreateWorkspaceDialog() {
+export function CreateWorkspaceDialog({ children }: { children?: React.ReactNode }) {
     const router = useRouter()
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -47,10 +47,12 @@ export function CreateWorkspaceDialog() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    New Workspace
-                </Button>
+                {children || (
+                    <Button>
+                        <Plus className="mr-2 h-4 w-4" />
+                        New Workspace
+                    </Button>
+                )}
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <form onSubmit={handleSubmit}>

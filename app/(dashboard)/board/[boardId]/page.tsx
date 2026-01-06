@@ -1,9 +1,9 @@
 import { connectDB } from "@/lib/db";
-import { Board } from "@/models/Board";
-import { Task } from "@/models/Task";
 import { getAuthSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import { TaskBoard } from "@/components/board/task-board"; // Client Component
+import { api } from "@/lib/axios";
+import { cookies } from "next/headers";
 
 // This is a Server Component
 interface BoardPageProps {
@@ -11,6 +11,22 @@ interface BoardPageProps {
         boardId: string;
     }>;
 }
+
+interface Board {
+    _id: string;
+    title: string;
+    workspaceId: string;
+    position: number;
+}
+
+interface Task {
+    _id: string;
+    title: string;
+    description?: string;
+    status: "todo" | "inProgress" | "done";
+    position: number;
+}
+
 
 export default async function BoardPage(props: BoardPageProps) {
     const params = await props.params;
@@ -21,18 +37,31 @@ export default async function BoardPage(props: BoardPageProps) {
         redirect("/login");
     }
 
-    const board = await Board.findById(params.boardId);
+    const cookieStore = await cookies();
+    let board: Board;
+    let tasks: Task[];
+
+    try {
+        const { data: b } = await api.get<Board>(`/boards/curr_id/${params.boardId}`, {
+            headers: { Cookie: cookieStore.toString() },
+        });
+        board = b;
+
+        const { data: t } = await api.get<Task[]>(`/tasks/board/${params.boardId}`, {
+            headers: { Cookie: cookieStore.toString() },
+        });
+        tasks = t;
+    } catch (error) {
+        return notFound();
+    }
 
     if (!board) {
         notFound();
     }
 
-    // Fetch tasks initially on server
-    const tasks = await Task.find({ boardId: board._id }).sort({ position: 1 });
-
-    // Serializable data
-    const initialTasks = JSON.parse(JSON.stringify(tasks));
-    const boardData = JSON.parse(JSON.stringify(board));
+    // Serializable data (Axios returns plain objects)
+    const initialTasks = tasks;
+    const boardData = board;
 
     return (
         <div className="flex flex-col h-full overflow-hidden">

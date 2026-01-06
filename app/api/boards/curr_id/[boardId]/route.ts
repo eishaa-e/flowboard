@@ -4,13 +4,39 @@ import { Board } from "@/models/Board";
 import { Task } from "@/models/Task";
 import { getAuthSession } from "@/lib/auth";
 
+// ... existing imports
+
 interface RouteParams {
     params: Promise<{
         boardId: string;
     }>;
 }
 
+export async function GET(req: Request, { params }: RouteParams) {
+    try {
+        const { boardId } = await params;
+        await connectDB();
+        const session = await getAuthSession();
+
+        if (!session) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const board = await Board.findById(boardId);
+
+        if (!board) {
+            return NextResponse.json({ error: "Board not found" }, { status: 404 });
+        }
+
+        return NextResponse.json(board);
+    } catch (error) {
+        console.error("Get board error:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+}
+
 export async function PUT(req: Request, { params }: RouteParams) {
+    // ...
     try {
         const { boardId } = await params;
         await connectDB();

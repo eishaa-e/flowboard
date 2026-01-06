@@ -85,7 +85,7 @@ export function LoginForm({
             {loading ? "Logging in..." : "Login"}
           </Button>
         </Field>
-        <FieldSeparator>Or continue with</FieldSeparator>
+
         <Field>
 
           <FieldDescription className="text-center">

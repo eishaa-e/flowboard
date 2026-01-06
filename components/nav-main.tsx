@@ -17,6 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { CreateWorkspaceDialog } from "@/components/workspace/create-workspace-dialog"
 
 export function NavMain({
   items,
@@ -56,9 +57,15 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
+                        {subItem.url === "/workspace/create" ? (
+                          <CreateWorkspaceDialog>
+                            <span className="cursor-pointer block">{subItem.title}</span>
+                          </CreateWorkspaceDialog>
+                        ) : (
+                          <a href={subItem.url}>
+                            <span>{subItem.title}</span>
+                          </a>
+                        )}
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

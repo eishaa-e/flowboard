@@ -5,13 +5,39 @@ import { Board } from "@/models/Board";
 import { Task } from "@/models/Task";
 import { getAuthSession } from "@/lib/auth";
 
+// ... existing imports
+
 interface RouteParams {
     params: Promise<{
         workspaceId: string;
     }>;
 }
 
+export async function GET(req: Request, { params }: RouteParams) {
+    try {
+        const { workspaceId } = await params;
+        await connectDB();
+        const session = await getAuthSession();
+
+        if (!session) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const workspace = await Workspace.findOne({ _id: workspaceId, owner: session.userId });
+
+        if (!workspace) {
+            return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+        }
+
+        return NextResponse.json(workspace);
+    } catch (error) {
+        console.error("Get workspace error:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+}
+
 export async function PUT(req: Request, { params }: RouteParams) {
+    // ...
     try {
         const { workspaceId } = await params;
         await connectDB();

@@ -9,9 +9,13 @@ export interface Task {
     position: number
 }
 
-export function TaskCard({ task }: { task: Task }) {
+import { cn } from "@/lib/utils"
+
+// ...
+
+export function TaskCard({ task, className }: { task: Task, className?: string }) {
     return (
-        <Card className="cursor-grab hover:shadow-md transition-shadow group relative">
+        <Card className={cn("cursor-grab hover:shadow-md transition-shadow group relative", className)}>
             <CardHeader className="p-4 pb-2 space-y-0 flex flex-row items-start justify-between gap-2">
                 <CardTitle className="text-sm font-medium leading-none pt-1">
                     {task.title}
